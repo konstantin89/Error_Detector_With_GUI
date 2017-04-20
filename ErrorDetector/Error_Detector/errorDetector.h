@@ -22,7 +22,7 @@
 #include "TerminateFlag.hpp"
 #include "../AD9772_Comm_Module/AD9772_Comm.h"
 
-#include "../error_gui/JoystickCalibrationFiles/JoystickCalib.h"
+#include "../../error_gui/JoystickCalibrationFiles/JoystickCalib.h"
 
 #include "LogModule.h"
 #include "TestParameters.h"
