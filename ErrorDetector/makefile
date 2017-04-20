@@ -8,29 +8,34 @@ CXX = g++
 CXX_FLAGS = -std=c++11 -Wall -Wextra -lwiringPi -lpthread -lsfml-graphics -lsfml-window -lsfml-system
 DEBUG_FLAG = -DDEBUG=1
 
-#Derectory for object and ececutable files.
+#Derectory for object and executable files.
 OBJDIR = ./ObjsAndExecs/
 AD7992_DIR = ./AD9772_Comm_Module/
 ERR_DET_DIR = ./Error_Detector/
 GRAPH_DIR = ./Graphics/
 
+JOYSTICK_CALIB_DIR = ../error_gui/JoystickCalibrationFiles/
+
+
 AD9772_MAIN = $(OBJDIR)AD9772_Comm_Main
 ERROR_DETECTOR_MAIN = $(OBJDIR)errorDetector
-JOYSTICK_CALIBRATION = $(OBJDIR)joysticCalibration
+JOYSTICK_CALIBRATION_PROC = $(OBJDIR)joysticCalibration
 
-all: $(AD9772_MAIN) $(ERROR_DETECTOR_MAIN)   $(JOYSTICK_CALIBRATION)
+all: $(AD9772_MAIN) $(ERROR_DETECTOR_MAIN)   $(JOYSTICK_CALIBRATION_PROC)
 
 
 $(ERROR_DETECTOR_MAIN): $(OBJDIR)A2D_Comm_I2C.o $(OBJDIR)AD9772_Comm.o \
                 $(OBJDIR)errorDetector.o $(OBJDIR)Graphics.o $(OBJDIR)pointerLocation.o\
 		        $(ERR_DET_DIR)Sample.h $(ERR_DET_DIR)errordetectorParameters.h \
-		        $(OBJDIR)LogModule.o $(ERR_DET_DIR)Sample.h
+		        $(OBJDIR)LogModule.o $(ERR_DET_DIR)Sample.h \
 	$(CXX) $(CXX_FLAGS) $^ -o $@
 
 $(AD9772_MAIN): $(OBJDIR)A2D_Comm_I2C.o $(OBJDIR)AD9772_Comm.o  $(AD7992_DIR)AD9772_Comm_Main.cpp
 	$(CXX) $(CXX_FLAGS) $^ -o $@
 
-$(OBJDIR)errorDetector.o: $(ERR_DET_DIR)errorDetector.cpp $(ERR_DET_DIR)errorDetector.h
+$(OBJDIR)errorDetector.o: $(ERR_DET_DIR)errorDetector.cpp $(ERR_DET_DIR)errorDetector.h\
+	$(JOYSTICK_CALIB_DIR)JoystickCalib.h $(JOYSTICK_CALIB_DIR)JoystickCalib.cpp
+
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 
@@ -55,7 +60,7 @@ $(OBJDIR)LogModule.o: $(ERR_DET_DIR)LogModule.cpp $(ERR_DET_DIR)LogModule.h
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 
-$(JOYSTICK_CALIBRATION): $(ERR_DET_DIR)joysticCalibration.cpp\
+$(JOYSTICK_CALIBRATION_PROC): $(ERR_DET_DIR)joysticCalibration.cpp\
 	                     $(OBJDIR)AD9772_Comm.o \
 	                     $(OBJDIR)A2D_Comm_I2C.o
 	$(CXX) $(CXX_FLAGS)  $^ -o $@

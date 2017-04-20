@@ -22,6 +22,8 @@
 #include "TerminateFlag.hpp"
 #include "../AD9772_Comm_Module/AD9772_Comm.h"
 
+#include "../error_gui/JoystickCalibrationFiles/JoystickCalib.h"
+
 #include "LogModule.h"
 #include "TestParameters.h"
 
@@ -62,13 +64,13 @@
 
 /******************* Joystick calibration values ***********/
 
-#define X_MIN 16
-#define X_MID 2056
-#define X_MAX 4095
+ushort X_MIN = 16;
+ushort X_MID = 2056;
+ushort X_MAX = 4095;
 
-#define Y_MIN 20
-#define Y_MID 2048
-#define Y_MAX 4095
+ushort Y_MIN = 20;
+ushort Y_MID = 2048;
+ushort Y_MAX = 4095;
 
 
 /************************** AD7992  ***********************/
@@ -119,8 +121,10 @@
 #define RECT_DIRECTION_CHANGE_PARAM_NUM 4
 #define FULL_SCREEN_PARAM_NUM 5
 
-std::string LOG_FILE_NAME_STR("./LogFile");
-std::string PARAM_FILE_NAME_STR("./Parameters");
+std::string LOG_FILE_NAME_STR("../TEXT_DATA_DIR/LogFile");
+std::string PARAM_FILE_NAME_STR("../TEXT_DATA_DIR/Parameters");
+std::string CALIB_DATA_FILE("../Text_Data/JoystickCalibData");
+
 
 
 /****************** Function Declarations *****************/

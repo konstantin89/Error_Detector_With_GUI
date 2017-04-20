@@ -445,6 +445,15 @@ int main()
 
     g_logModule.createLogFileTitle(g_testParams);
     
+    ushort calibData[4];
+    if(JoystickCalib::readFromFile(calibData, CALIB_DATA_FILE.c_str()) == SUCCESS)
+    {
+        X_MIN = calibData[2];
+        X_MAX = calibData[3];
+        Y_MIN = calibData[1];
+        Y_MAX = calibData[0];
+    }
+
     std::cout << "Current app will run for "
               << std::to_string(TEST_DURATION_SECS) 
               << " seconds." << std::endl;

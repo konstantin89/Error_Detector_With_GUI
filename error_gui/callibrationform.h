@@ -2,6 +2,10 @@
 #define CALLIBRATIONFROM_H
 
 #include <QDialog>
+#include "./JoystickCalibrationFiles/JoystickCalib.h"
+
+
+std::string CALIB_DATA_FILE("../Text_Data/JoystickCalibData");
 
 namespace Ui {
 class CallibrationFrom;
