@@ -121,8 +121,8 @@ ushort Y_MAX = 4095;
 #define RECT_DIRECTION_CHANGE_PARAM_NUM 4
 #define FULL_SCREEN_PARAM_NUM 5
 
-std::string LOG_FILE_NAME_STR("../TEXT_DATA_DIR/LogFile");
-std::string PARAM_FILE_NAME_STR("../TEXT_DATA_DIR/Parameters");
+std::string LOG_FILE_NAME_STR("../Text_Data/LogFile");
+std::string PARAM_FILE_NAME_STR("../Text_Data/Parameters");
 std::string CALIB_DATA_FILE("../Text_Data/JoystickCalibData");
 
 
