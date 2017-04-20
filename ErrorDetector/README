@@ -1,0 +1,29 @@
+/******************************************************
+*
+* @author: Kosta Bulgakov
+*
+* @date: 17/12/2016
+*
+* @brief: README file for "Error Detector" 
+*         application.
+*
+*
+******************************************************/
+
+
+Executalbes List
+****************
+
+*AD9772_Comm_Main: Runs communication module between
+                   linux i2c device driver and AD7992
+                   analog to digital converter.
+
+*errorDetector: Multithreaded application that used 
+                to detect human errors in simple game.
+
+
+
+
+
+
+/****************** End of file *********************/
