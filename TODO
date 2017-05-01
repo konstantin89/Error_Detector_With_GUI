@@ -1,0 +1,15 @@
+
+
+01-05-2017
+**********
+
+*Test the phase lengths added to game parameters.
+
+*In gui add choosing training and test phase
+ lengths(Minuts).
+
+*Chack changes done in data writer thread. make sure that
+ it doenst write in trainig phase, and writing in test
+ phase.
+
+*Check the log file naming system.

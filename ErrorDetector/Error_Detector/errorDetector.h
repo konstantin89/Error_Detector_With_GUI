@@ -121,11 +121,13 @@ ushort Y_MAX = 4095;
 #define RECT_DIRECTION_CHANGE_PARAM_NUM 4
 #define FULL_SCREEN_PARAM_NUM 5
 
-std::string LOG_FILE_NAME_STR("../Text_Data/LogFile");
+std::string LOG_FILE_DIR_STR("../Text_Data");
 std::string PARAM_FILE_NAME_STR("../Text_Data/Parameters");
 std::string CALIB_DATA_FILE("../Text_Data/JoystickCalibData");
 
 
+#define TRAINING_PHASE 0
+#define TESTING_PHASE  1
 
 /****************** Function Declarations *****************/
 

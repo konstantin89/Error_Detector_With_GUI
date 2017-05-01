@@ -2,9 +2,10 @@
 #include "LogModule.h"
 
 
-LogModule::LogModule(const char* logFileName)
+LogModule::LogModule(const char* logFileDir)
 {
-	_logFileName = std::string(logFileName);
+	std::string logFileDriStr(logFileName);
+	_logFileName = getLogFileName(logFileDriStr);
 
 	_logFileStram.open(_logFileName.c_str(), std::fstream::out);
 	if(_logFileStram.is_open() == false)
@@ -40,6 +41,8 @@ void LogModule::createLogFileTitle(TestParameters& testParams)
 	_logFileStram << "Direction change enabled: " << testParams.directionChange << std::endl;
 	_logFileStram << "Rectangle Size:           " << testParams.rectSize << std::endl;
 	_logFileStram << "Rectangle pattern ID:     " << testParams.rectPatternId << std::endl;
+	_logFileStram << "Training phase minuts:    " << testParams.trainPhaseMin << std::endl;
+	_logFileStram << "Test phase minuts:        " << testParams.testPhaseMin << std::endl;
 	_logFileStram << "*********************************************************" << std::endl;
 }
 
@@ -56,13 +59,27 @@ void LogModule::pushLogEntery(std::string eventDiscription)
 
 
 
-bool LogModule::tryToPop()
+bool LogModule::tryToPopAndWrite()
 {
 	std::string logEntery;
 	bool popRetVal = _logQueue.tryToPop(logEntery);
 	if(popRetVal)
 	{
 		writeStrToFile(logEntery);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool LogModule::tryToPop()
+{
+	std::string logEntery;
+	bool popRetVal = _logQueue.tryToPop(logEntery);
+	if(popRetVal)
+	{
 		return true;
 	}
 	else
@@ -105,4 +122,26 @@ int LogModule::writeStrToFile(std::string strToWrite)
 	{
 		return MY_ERROR;
 	}
+}
+
+
+string LogModule::getLogFileName(string fileDirectory)
+{
+	bool foundName = false;
+	string logFileName;
+	while(foundName)
+	{
+		logFileName = fileDirectory + "/" + LOG_FILE_BASE_NAME + std::string(_nextLogIndex);
+		std::ifstream fs(logFileName)
+		if(fs.is_good())
+		{
+			fs.close();
+		}
+		else
+		{
+			foundName = true;
+		}
+		_nextLogIndex++;
+	}
+	return logFileName;
 }

@@ -51,10 +51,12 @@ int WindowSize = 800;
 
 TestParameters g_testParams;
 
-LogModule g_logModule(LOG_FILE_NAME_STR.c_str());
+LogModule g_logModule(LOG_FILE_DIR_STR.c_str());
 
 
-
+int g_trainingPhaseMins = 0;
+int g_testPhaseMins = 0;
+int g_currentGamePhase;
 
 void autoSamplingMode()
 {
@@ -260,9 +262,17 @@ void dataWriter()
 {
     while(TERMINATION_FLAG == false)
     {
-        while(g_logModule.tryToPop())
+        bool popRetVal = true;
+        while(popRetVal)
         {
-            /* EMPTY */
+            if(g_currentGamePhase == TRAINING_PHASE)
+            {
+                popRetVal = g_logModule.tryToPop();
+            }
+            else
+            {
+                popRetVal = g_logModule.tryToPopAndWrite();
+            }
         }
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
@@ -444,7 +454,27 @@ int main()
     }
 
     g_logModule.createLogFileTitle(g_testParams);
-    
+
+    /*
+    * Check the training and game phases lengths.
+    * If the training phase length is zero then
+    * there is no training.
+    */
+    g_trainingPhaseMins = g_testParams.trainPhaseMin;
+    g_testPhaseMins = g_testParams.testPhaseMin;
+
+    if(g_trainingPhaseMins == 0)
+    {
+        g_currentGamePhase = TRAINING_PHASE;
+        g_logModule.pushLogEvent("Starting trainig phase.");
+    }
+        
+    else
+    {
+        g_currentGamePhase = TESTING_PHASE;
+        g_logModule.pushLogEvent("No trainig phase, starting test phase.");
+    }
+        
     ushort calibData[4];
     if(JoystickCalib::readFromFile(calibData, CALIB_DATA_FILE.c_str()) == SUCCESS)
     {
@@ -474,7 +504,16 @@ int main()
     dataWriterThread.detach();
     gameAppThread.detach();
 
-    std::this_thread::sleep_for(std::chrono::seconds(10000000));
+
+    std::this_thread::sleep_for(std::chrono::minuts(g_trainingPhaseMins));
+
+    /* IMPORTANT! HERE INFORM THE USER OF PHASE CHANGE */
+
+    std::this_thread::sleep_for(std::chrono::minuts(g_testPhaseMins));
+
+    /* IMPORTANT! HERE INFORM THE USER OF TEST END */
+
+     std::this_thread::sleep_for(std::chrono::seconds(5));
     
     return 0;
 }

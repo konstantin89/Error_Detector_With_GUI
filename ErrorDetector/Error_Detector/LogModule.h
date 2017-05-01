@@ -7,6 +7,7 @@
 
 
 #define EVENT_PREFIX "EVENT:"
+std::string LOG_FILE_BASE_NAME("LogFile");
 
 typedef unsigned short WCHAR;
 
@@ -26,13 +27,15 @@ private:
 	int _rectXpos = 0;
 	int _rectYpos = 0;
 
+	int _nextLogIndex = 0;
+
 public:
 
 	/**
 	*
 	*
 	*/
-	LogModule(const char* logFileName);
+	LogModule(const char* logFileDir);
 
 	/**
 	*
@@ -45,6 +48,12 @@ public:
 	*
 	*/
 	void setRectCoordinates(int x, int y);
+
+	/**
+	*
+	*
+	*/
+	bool tryToPopAndWrite();
 
 	/**
 	*
@@ -88,5 +97,12 @@ public:
 	*
 	*/
 	int writeStrToFile(std::string strToWrite);
+
+
+	/**
+	*
+	*
+	*/
+	string getLogFileName(string fileDirectory);
 
 };

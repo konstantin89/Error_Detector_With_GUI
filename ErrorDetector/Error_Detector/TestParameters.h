@@ -36,7 +36,10 @@
 #define DEFAULT_RECT_PATTERN_ID 0
 #define DEFAULT_RECT_SIZE 50
 
-#define NUMBER_OF_PARAMETERS 6
+#define DEFAULT_TRAINING_PHASE_MIN 2
+#define DEFAULT_TEST_PHASE_MIN 8
+
+#define NUMBER_OF_PARAMETERS 8
 
 
 class TestParameters
@@ -48,6 +51,10 @@ public:
 	int directionChange =  DEFAULT_DIRECTION_CHANGE;
 	int rectPatternId =    DEFAULT_RECT_PATTERN_ID;
 	int rectSize =         DEFAULT_RECT_SIZE;
+
+	int trainPhaseMin =    DEFAULT_TRAINING_PHASE_MIN;
+	int testPhaseMin =     DEFAULT_TEST_PHASE_MIN;
+
 
 	/**
 	* Default constructor.
@@ -76,7 +83,9 @@ public:
 					int         paramSpeedChange,
 					int         paramDirectionChange,
 					int         paramEectPatternId,
-					int         paramRectSize)
+					int         paramRectSize,
+					int         paramTrainPhaseMins,
+					int         paramTestPhaseMins)
 	{
 		playerName = paramPlayerName;
 		rectSpeed = paramPRectSpeed;
@@ -84,6 +93,8 @@ public:
 		directionChange = paramDirectionChange;
 		rectPatternId = paramEectPatternId;
 		rectSize = paramRectSize;
+		trainPhaseMin = paramTrainPhaseMins;
+		testPhaseMin = paramTestPhaseMins;
 	}
 				
 
@@ -116,6 +127,8 @@ public:
 			directionChange = std::stoi(parameterArr[3]);
 			rectPatternId =   std::stoi(parameterArr[4]);
 			rectSize =        std::stoi(parameterArr[5]);
+			trainPhaseMin =   std::stoi(parameterArr[6]);
+			testPhaseMin =    std::stoi(parameterArr[7]);
 
 			return SUCCESS;
 		}
@@ -161,6 +174,8 @@ public:
 		parameterArr[3] = std::to_string(directionChange);
 		parameterArr[4] = std::to_string(rectPatternId);
 		parameterArr[5] = std::to_string(rectSize);
+		parameterArr[6] = std::to_string(trainPhaseMin);
+		parameterArr[7] = std::to_string(testPhaseMin);
 
 		std::string retStr;
 		for(int i=0; i<NUMBER_OF_PARAMETERS; i++)
