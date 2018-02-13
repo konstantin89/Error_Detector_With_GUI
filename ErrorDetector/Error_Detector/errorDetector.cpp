@@ -235,8 +235,6 @@ void dataProcessor()
         else
         {
             gSampleQueue.waitAndPop(popedSample);
-
-            po.pushSample(*popedSample);
             
             /*
             ************* DO CALCULATION ON DATA HERE *********.
